@@ -9,12 +9,19 @@ type Props = {
   params: { id: string }
 }
 
-const ProductPage = async ({ params: { id } }: Props) => {
-
-  
+const ProductPage = async ({ params }: Props) => {
+  const { id } = await params
 
   //get the info of the product
   const product = await getProduct(id)
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl">Product not found</div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen">
@@ -28,7 +35,7 @@ const ProductPage = async ({ params: { id } }: Props) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 flex flex-col gap-6">
-            {product.images[0].src && (
+            {product.images?.[0]?.src && (
               <div className="aspect-auto rounded-lg overflow-hidden flex items-center justify-center h-[80vh]">
                 <Image
                   src={product.images[0].src}

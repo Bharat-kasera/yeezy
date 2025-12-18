@@ -28,9 +28,7 @@ export const getProducts = async () => {
 
 export const getProduct = async (id: string) => {
   try {
-    const product = await WooCommerce.get(`products`, {
-      id: parseInt(id),
-    })
+    const product = await WooCommerce.get(`products/${id}`)
     return product.data
   } catch (error) {
     console.error('❌ WooCommerce Product API Error:', error)
